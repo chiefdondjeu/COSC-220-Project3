@@ -5,7 +5,7 @@
  *Created: November 29, 2019
  *Current: November 29, 2019
  */
-///this is a editing test
+//this is a editing test
 #ifndef DNODE_H
 #define DNODE_H
 
