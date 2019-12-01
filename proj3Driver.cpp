@@ -18,8 +18,11 @@
 int main()
 {
 	
-	dNode<Student>* list = new dNode<Student>;
+	dNode<Student>* list = new dNode<Student>, *fix = NULL;
 	read_file(list);
+
+	fix = list->prev;
+	fix->next = list->next; 
 
 	char choice;
 	std::string space = "\n";
@@ -27,6 +30,7 @@ int main()
 	bool END = true;
 	do
 	{
+
 		for (int i = 0; i < 75; i++)
 			std::cout << space;
 
