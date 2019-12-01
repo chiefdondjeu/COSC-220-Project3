@@ -34,12 +34,13 @@ void display(dNode<T>* currNode)
 	std::cout << std::left << std::setw(15) << "Student ID" << std::setw(31) << "Name" << std::setw(10) << "Year" << std::setw(10) << "GPA" << std::endl;
 	std::cout << "------------------------------------------------------------" << std::endl;
 
-	while (p != currNode)
+	do
 	{
 		std::cout << p->value;
 		p = p->next;
 		count++;
-	}
+	}while(p != currNode->next);
+
 	std::cout << "------------------------------------------------------------" << std::endl;
 	std::cout << "\nStudent count - " << count << std::endl;
 
@@ -64,7 +65,7 @@ dNode<T>* add(dNode<T>* currNode, T val)
 	prevNode = currNode->prev;
 
 	newNode->prev = prevNode;
-	newNode->next = currNode;
+	newNode->next = currNode->next;
 
 	prevNode->next = newNode;
 	currNode->prev = newNode;
