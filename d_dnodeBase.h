@@ -358,6 +358,7 @@ dNode<T>* deleteStudent(dNode<T>* head)
 
 	switch (del)
 	{
+		case 'i':	//for case sensitivity
 		case 'I':
 			std::cout << "ID -- ";
 			std::cin >> id;
@@ -429,6 +430,7 @@ dNode<T>* deleteStudent(dNode<T>* head)
 
 			break;//end of I case
 
+		case 'f':
 		case 'F':
 			std::cout << "First name -- ";
 			std::cin >> firstname;

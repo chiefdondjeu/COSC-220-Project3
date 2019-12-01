@@ -72,25 +72,31 @@ int main()
 
 		switch (choice)
 		{
-		case 'V':
-			display(head);
-			break;
-		case 'F':
-			findStudent(head);
-			break;
-		case 'S':
-			sortStudent(head);
-			break;
-		case 'A':
-			addStudent(head);
-			break;
-		case 'D':
-			deleteStudent(head);
-			break;
-		case 'Q':
-			END = false;
-			std::cout << "You have successfully exited the program. Good day!\n\n" << std::endl;
-			break;
+			case 'v':
+			case 'V':
+				display(head);
+				break;
+			case 'f':
+			case 'F':
+				findStudent(head);
+				break;
+			case 's':
+			case 'S':
+				sortStudent(head);
+				break;
+			case 'a':
+			case 'A':
+				addStudent(head);
+				break;
+			case 'd':
+			case 'D':
+				deleteStudent(head);
+				break;
+			case 'q':
+			case 'Q':
+				END = false;
+				std::cout << "You have successfully exited the program. Good day!\n\n" << std::endl;
+				break;
 		}
 
 	} while (END == true);
