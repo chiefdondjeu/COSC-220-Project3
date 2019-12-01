@@ -72,7 +72,7 @@ int main()
 
 		switch (choice)
 		{
-			case 'v':
+			case 'v'://for case sensitivity
 			case 'V':
 				display(head);
 				break;
