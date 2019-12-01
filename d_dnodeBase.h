@@ -177,6 +177,8 @@ void addStudent(dNode<T>* head)
 	double GPA;
 	std::string firstname, lastname;
 
+	std :: ofstream outfile;
+
 	std::cout << "\n=======================================================" << std::endl;
 	std::cout << "New student's info...\n" << std::endl;
 	std::cout << "ID\t-- ";
@@ -192,6 +194,9 @@ void addStudent(dNode<T>* head)
 	std::cin >> GPA;
 
 	add(head, Student(id, firstname, lastname, year, GPA));
+
+	outfile.open("student.txt", std :: fstream :: app);
+	outfile << id << ' ' << firstname << ' ' << lastname << ' ' << year << ' ' << GPA << std :: endl;
 
 	std::cout << "\n\nPress enter to continue...";
 	std::cin.ignore();
