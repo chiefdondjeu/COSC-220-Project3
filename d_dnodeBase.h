@@ -74,7 +74,7 @@ void findStudent(dNode<T>* head);
 //searches and delete student in the list
 //parameter: dnode pointer
 //returns: dnode pointer
-//precondtion: none
+//precondtion: needs at lead two student in the list
 //postcondition: one student as been removed  from the list if found
 template <typename T>
 dNode<T>* deleteStudent(dNode<T>* head);
@@ -326,6 +326,16 @@ void findStudent(dNode<T>* head)
 template <typename T>
 dNode<T>* deleteStudent(dNode<T>* head)
 {
+	if(head->next == head->prev)
+	{
+		std :: cout << "ERROR: not allowed to remove last student" << std :: endl;
+		
+		std::cout << "\n\nPress enter to continue...";
+		std::cin.ignore();
+		std::cin.get();
+		return head;
+	}
+
 	int id;
 	std::string firstname, lastname;
 
