@@ -314,9 +314,9 @@ void deleteStudent(dNode<T>* currNode)
 				delete delt;
 			}
 
-			//prevNode = currNode;
-			//currNode = currNode->next;
-			//succNode = currNode->next;
+			prevNode = currNode;
+			currNode = currNode->next;
+			succNode = currNode->next;
 		}
 		break;
 	case 'F':
@@ -364,13 +364,18 @@ int size(dNode<T>* currNode) {
 	return count;
 }
 template <typename T>
-void sortStudent(dNode<T>* currNode) {
+void sortStudent(dNode<T>* currNode)
+{
 	dNode<T>* Sorter;
 	dNode<T>* Sorter2;
 	char choice;
-	std::cout << "how would you like it sorted?(I = ID, F = First Name, L = Last Name, Y = Year, G = GPA" << std::endl;
+
+	std :: cout << "\n=======================================================" << std::endl;
+	std :: cout << "Sort by..." << std::endl;
+	std :: cout << "I - ID\nF - First name\nL - Last name\nY - Year\nG - GPA" << std :: endl;
 	std::cin >> choice;
 	Sorter = currNode;
+
 	if (choice == 'I') {
 		Student x;
 		for (int i = 0; i < size(currNode); i++) {
@@ -451,6 +456,10 @@ void sortStudent(dNode<T>* currNode) {
 			Sorter = Sorter->next;
 		}
 	}
+
+	std::cout << "\n\nPress enter to continue...";
+	std::cin.ignore();
+	std::cin.get();
 
 }
 #endif/*
