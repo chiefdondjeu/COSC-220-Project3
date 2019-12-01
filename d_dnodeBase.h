@@ -39,7 +39,7 @@ void display(dNode<T>* currNode)
 		std::cout << p->value;
 		p = p->next;
 		count++;
-	}while(p != currNode->next);
+	} while (p != currNode->next);
 
 	std::cout << "------------------------------------------------------------" << std::endl;
 	std::cout << "\nStudent count - " << count << std::endl;
@@ -357,11 +357,18 @@ template <typename T>
 int size(dNode<T>* currNode) {
 	int count = 0;
 	dNode<T>* p = currNode->next;
-	while (p != currNode)
+	/*while (p != currNode)
 	{
 		p = p->next;
 		count++;
 	}
+	*/
+	do
+	{
+		p = p->next;
+		count++;
+	} while (p != currNode->next);
+
 	return count;
 }
 template <typename T>
@@ -371,18 +378,19 @@ void sortStudent(dNode<T>* currNode)
 	dNode<T>* Sorter2;
 	char choice;
 
-	std :: cout << "\n=======================================================" << std::endl;
-	std :: cout << "Sort by..." << std::endl;
-	std :: cout << "\nI - ID\nF - First name\nL - Last name\nY - Year\nG - GPA" << std :: endl;
-	std ::cout << "\nChoice selected -- ";
-	std :: cin >> choice;
+	std::cout << "\n=======================================================" << std::endl;
+	std::cout << "Sort by..." << std::endl;
+	std::cout << "\nI - ID\nF - First name\nL - Last name\nY - Year\nG - GPA" << std::endl;
+	std::cout << "\nChoice selected -- ";
+	std::cin >> choice;
 	Sorter = currNode;
 
 	if (choice == 'I') {
 		Student x;
 		for (int i = 0; i < size(currNode); i++) {
 			Sorter2 = Sorter->next;
-			while (Sorter2 != currNode) {
+			do
+			{
 				if (Sorter->value.getId() > Sorter2->value.getId()) {
 					x = Sorter->value;
 					Sorter->value = Sorter2->value;
@@ -390,7 +398,7 @@ void sortStudent(dNode<T>* currNode)
 
 				}
 				Sorter2 = Sorter2->next;
-			}
+			} while (Sorter2 != currNode->next);
 			Sorter = Sorter->next;
 		}
 	}
@@ -398,7 +406,8 @@ void sortStudent(dNode<T>* currNode)
 		Student x;
 		for (int i = 0; i < size(currNode); i++) {
 			Sorter2 = Sorter->next;
-			while (Sorter2 != currNode) {
+			do
+			{
 				if (Sorter->value.getFname() > Sorter2->value.getFname()) {
 					x = Sorter->value;
 					Sorter->value = Sorter2->value;
@@ -406,7 +415,7 @@ void sortStudent(dNode<T>* currNode)
 
 				}
 				Sorter2 = Sorter2->next;
-			}
+			} while (Sorter2 != currNode->next);
 			Sorter = Sorter->next;
 		}
 	}
@@ -414,7 +423,8 @@ void sortStudent(dNode<T>* currNode)
 		Student x;
 		for (int i = 0; i < size(currNode); i++) {
 			Sorter2 = Sorter->next;
-			while (Sorter2 != currNode) {
+			do
+			{
 				if (Sorter->value.getLname() > Sorter2->value.getLname()) {
 					x = Sorter->value;
 					Sorter->value = Sorter2->value;
@@ -422,7 +432,7 @@ void sortStudent(dNode<T>* currNode)
 
 				}
 				Sorter2 = Sorter2->next;
-			}
+			} while (Sorter2 != currNode->next);
 			Sorter = Sorter->next;
 		}
 	}
@@ -430,7 +440,9 @@ void sortStudent(dNode<T>* currNode)
 		Student x;
 		for (int i = 0; i < size(currNode); i++) {
 			Sorter2 = Sorter->next;
-			while (Sorter2 != currNode) {
+			
+			do
+			{
 				if (Sorter->value.getYear() > Sorter2->value.getYear()) {
 					x = Sorter->value;
 					Sorter->value = Sorter2->value;
@@ -438,7 +450,7 @@ void sortStudent(dNode<T>* currNode)
 
 				}
 				Sorter2 = Sorter2->next;
-			}
+			} while (Sorter2 != currNode->next);
 			Sorter = Sorter->next;
 		}
 	}
@@ -446,7 +458,9 @@ void sortStudent(dNode<T>* currNode)
 		Student x;
 		for (int i = 0; i < size(currNode); i++) {
 			Sorter2 = Sorter->next;
-			while (Sorter2 != currNode) {
+			
+			do
+			{
 				if (Sorter->value.getGPA() > Sorter2->value.getGPA()) {
 					x = Sorter->value;
 					Sorter->value = Sorter2->value;
@@ -454,7 +468,7 @@ void sortStudent(dNode<T>* currNode)
 
 				}
 				Sorter2 = Sorter2->next;
-			}
+			} while (Sorter2 != currNode->next);
 			Sorter = Sorter->next;
 		}
 	}
@@ -471,7 +485,3 @@ void sortStudent(dNode<T>* currNode)
  *Created: November 29, 2019
  *Current: November 29, 2019
  */
-
-
-
-
