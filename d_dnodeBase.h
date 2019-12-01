@@ -372,8 +372,9 @@ void sortStudent(dNode<T>* currNode)
 
 	std :: cout << "\n=======================================================" << std::endl;
 	std :: cout << "Sort by..." << std::endl;
-	std :: cout << "I - ID\nF - First name\nL - Last name\nY - Year\nG - GPA" << std :: endl;
-	std::cin >> choice;
+	std :: cout << "\nI - ID\nF - First name\nL - Last name\nY - Year\nG - GPA" << std :: endl;
+	std ::cout << "\nChoice selected -- ";
+	std :: cin >> choice;
 	Sorter = currNode;
 
 	if (choice == 'I') {
