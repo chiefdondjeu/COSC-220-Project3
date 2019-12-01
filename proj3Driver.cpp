@@ -3,7 +3,7 @@
  *main function
  *Author: Florent Dondjeu Tschoufack
  *Created: November 29, 2019
- *Current: November 29, 2019
+ *Current: December 1, 2019
  */
 
 #include <iostream>
@@ -18,11 +18,8 @@
 int main()
 {
 	
-	dNode<Student>* list = new dNode<Student>, *fix = NULL;
-	read_file(list);
-
-	fix = list->prev;
-	fix->next = list->next; 
+	dNode<Student>* head = new dNode<Student>, *fix = NULL, *f ;
+	read_file(head);
 
 	char choice;
 	std::string space = "\n";
@@ -30,6 +27,26 @@ int main()
 	bool END = true;
 	do
 	{
+		fix = head->prev;
+		fix->next = head->next;
+		//head now points to the front and back of the list, no node points at head
+
+		f = head->next;
+		f->prev = head->prev;
+		//first node points at last node instead of head
+
+		//first node check
+		//std :: cout << space;
+		//std :: cout << f->next->value;
+		//std :: cout << f->value;
+		//std :: cout << f->prev->value;
+		//std :: cout << space;
+
+		//last node check
+		//std :: cout << fix->next->value;
+		//std :: cout << fix->value;
+		//std :: cout << fix->prev->value;
+		//std :: cout << space;
 
 		for (int i = 0; i < 75; i++)
 			std::cout << space;
@@ -56,19 +73,19 @@ int main()
 		switch (choice)
 		{
 		case 'V':
-			display(list);
+			display(head);
 			break;
 		case 'F':
-			findStudent(list);
+			findStudent(head);
 			break;
 		case 'S':
-			sortStudent(list);
+			sortStudent(head);
 			break;
 		case 'A':
-			addStudent(list);
+			addStudent(head);
 			break;
 		case 'D':
-			deleteStudent(list);
+			deleteStudent(head);
 			break;
 		case 'Q':
 			END = false;

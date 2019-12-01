@@ -1,10 +1,9 @@
-
 /*
  *d_dnodeBase.h
  *definition of dnode class
- *Author: Florent Dondjeu Tschoufack
+ *Author: Ryan Kern
  *Created: November 29, 2019
- *Current: November 29, 2019
+ *Current: November 1, 2019
  */
 
 #ifndef DNODEBASE_H
@@ -17,37 +16,14 @@
 #include "d_dnode.h"
 #include "studentClass.h"
 
- //display
- //displays the elements in the list
- //parameter: dnode pointer
- //returns: none
- //precondition: list is not empty
- //postcondition: every element in the list has been printed
+//display
+//displays the elements in the list
+//parameter: dnode pointer
+//returns: none
+//precondition: list is not empty
+//postcondition: every element in the list has been printed
 template <typename T>
-void display(dNode<T>* currNode)
-{
-	int count = 0;
-	dNode<T>* p = currNode->next;
-
-	std::cout << std::endl;
-	std::cout << "------------------------------------------------------------" << std::endl;
-	std::cout << std::left << std::setw(15) << "Student ID" << std::setw(31) << "Name" << std::setw(10) << "Year" << std::setw(10) << "GPA" << std::endl;
-	std::cout << "------------------------------------------------------------" << std::endl;
-
-	do
-	{
-		std::cout << p->value;
-		p = p->next;
-		count++;
-	} while (p != currNode->next);
-
-	std::cout << "------------------------------------------------------------" << std::endl;
-	std::cout << "\nStudent count - " << count << std::endl;
-
-	std::cout << "\n\nPress enter to continue...";
-	std::cin.ignore();
-	std::cin.get();
-}
+void display(dNode<T>* head);
 
 //add
 //adds element into the list
@@ -56,22 +32,7 @@ void display(dNode<T>* currNode)
 //precondition: none
 //postcondition: the new element is in the list
 template <typename T>
-dNode<T>* add(dNode<T>* currNode, T val)
-{
-	dNode<T>* newNode, * prevNode;
-
-	newNode = new dNode<T>(val);
-
-	prevNode = currNode->prev;
-
-	newNode->prev = prevNode;
-	newNode->next = currNode->next;
-
-	prevNode->next = newNode;
-	currNode->prev = newNode;
-
-	return newNode;
-}
+dNode<T>* add(dNode<T>* head, T val);
 
 //read_file
 //reads students information from a file and puts it in the list
@@ -80,24 +41,7 @@ dNode<T>* add(dNode<T>* currNode, T val)
 //precondition: file is not empty
 //postcondition: every students information from the file is in the list
 template <typename T>
-void read_file(dNode<T>* currNode)
-{
-	int id, year;
-	double GPA;
-	std::string firstname, lastname;
-
-	std::ifstream infile;
-	infile.open("student.txt");
-	while (!infile.eof())
-	{
-		infile >> id;
-		infile >> firstname;
-		infile >> lastname;
-		infile >> year;
-		infile >> GPA;
-		add(currNode, Student(id, firstname, lastname, year, GPA));
-	}
-}
+void read_file(dNode<T>* head);
 
 //addStudent
 //adds one student information
@@ -106,7 +50,128 @@ void read_file(dNode<T>* currNode)
 //precondition: none
 //postcondition: the new student information is in the list
 template <typename T>
-void addStudent(dNode<T>* currNode)
+void addStudent(dNode<T>* head);
+
+//search
+//searchs students in datdabase based on user's description
+//parameter: dnode pointer, char variable
+//returns: true if search found else false
+//precondition: none
+//postcondition: either true or false is returned
+template<typename T>
+bool search(dNode<T>* head, char choice);
+
+//findStudent
+//determines how the student should be searched
+//parameter: dnode pointer
+//returns: none
+//precondition: none
+//postcondition: notifies the user if the student is in or not in the list
+template <typename T>
+void findStudent(dNode<T>* head);
+
+//deleteStudent
+//searches and delete student in the list
+//parameter: dnode pointer
+//returns: dnode pointer
+//precondtion: none
+//postcondition: one student as been removed  from the list if found
+template <typename T>
+dNode<T>* deleteStudent(dNode<T>* head);
+
+//size
+//counts number of student in the list
+//parameter: dnode pointer
+//return: number of students
+//precondition: none
+//postcondition: correct number of students is returned
+template <typename T>
+int size(dNode<T>* head);
+
+//sortStudent
+//sorts students by id, name, year, and GPA
+//parameter: dnode pointer
+//returns: none
+//preconditon: none
+//postcondition: the list is ordered accordingly
+template <typename T>
+void sortStudent(dNode<T>* head);
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////
+template <typename T>
+void display(dNode<T>* head)
+{
+	if(head->next == NULL)
+		return;
+
+	dNode<T>* p = head->next;
+
+	std::cout << std::endl;
+	std::cout << "------------------------------------------------------------" << std::endl;
+	std::cout << std::left << std::setw(15) << "Student ID" << std::setw(31) << "Name" << std::setw(10) << "Year" << std::setw(10) << "GPA" << std::endl;
+	std::cout << "------------------------------------------------------------" << std::endl;
+
+	if(head->next != NULL)
+	{
+		do
+		{
+			std::cout << p->value;
+			p = p->next;
+		} while(p != head->next);
+	}
+
+	std::cout << "------------------------------------------------------------" << std::endl;
+	std::cout << "\nStudent count - " << size(head) << std::endl;
+
+	std::cout << "\n\nPress enter to continue...";
+	std::cin.ignore();
+	std::cin.get();
+}
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////
+template <typename T>
+dNode<T>* add(dNode<T>* head, T val)
+{
+	dNode<T>* newNode, * prevNode;
+
+	newNode = new dNode<T>(val);
+
+	if(head->next == NULL)
+	{
+		head->next = newNode;
+	}
+
+	prevNode = head->prev;
+
+	newNode->prev = prevNode;
+	newNode->next = head->next;
+
+	prevNode->next = newNode;
+	head->prev = newNode;
+
+	return newNode;
+}
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////
+template <typename T>
+void read_file(dNode<T>* head)
+{
+	int id, year;
+	double GPA;
+	std::string firstname, lastname;
+
+	std::ifstream infile;
+	infile.open("student.txt");
+	while (infile >> id >> firstname >> lastname >> year >> GPA)
+	{
+		add(head, Student(id, firstname, lastname, year, GPA));
+	}
+	infile.close();
+}
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////
+template <typename T>
+void addStudent(dNode<T>* head)
 {
 	int id, year;
 	double GPA;
@@ -126,35 +191,28 @@ void addStudent(dNode<T>* currNode)
 	std::cout << "GPA\t-- ";
 	std::cin >> GPA;
 
-	add(currNode, Student(id, firstname, lastname, year, GPA));
-	//std :: cout << "=====================================" << std :: endl;
+	add(head, Student(id, firstname, lastname, year, GPA));
 
 	std::cout << "\n\nPress enter to continue...";
 	std::cin.ignore();
 	std::cin.get();
-
 }
 
-//search
-//searchs students in datdabase based on user's description
-//parameter: dnode pointer, char variable
-//returns: true if search found else false
-//precondition: none
-//postcondition: either true or false is returned
+////////////////////////////////////////////////////////////////////////////////////////////////////////
 template<typename T>
-bool search(dNode<T>* currNode, char choice)
+bool search(dNode<T>* head, char choice)
 {
 	int id;
 	std::string firstname, lastname;
 
-	dNode<T>* p = currNode->next;
+	dNode<T>* p = head->next;
 
 	if (choice == 'I')
 	{
 		std::cout << "ID -- ";
 		std::cin >> id;
 
-		while (p != currNode)
+		while (p != head)
 		{
 			if (p->value.getId() == id)
 			{
@@ -170,7 +228,7 @@ bool search(dNode<T>* currNode, char choice)
 		std::cout << "First name -- ";
 		std::cin >> firstname;
 
-		while (p != currNode)
+		while (p != head)
 		{
 			if (p->value.getFname() == firstname)
 			{
@@ -186,7 +244,7 @@ bool search(dNode<T>* currNode, char choice)
 		std::cout << "Last name -- ";
 		std::cin >> lastname;
 
-		while (p != currNode)
+		while (p != head)
 		{
 			if (p->value.getLname() == lastname)
 			{
@@ -200,24 +258,18 @@ bool search(dNode<T>* currNode, char choice)
 	return false;
 }
 
-//findStudent
-//determines how the student should be searched
-//parameter: dnode pointer
-//returns: none
-//precondition: none
-//postcondition: notifies the user if the student is in or not in the list
+////////////////////////////////////////////////////////////////////////////////////////////////////////
 template <typename T>
-void findStudent(dNode<T>* currNode)
+void findStudent(dNode<T>* head)
 {
 	char c, c1;
 	bool tell;
 
 	std::cout << "\n=======================================================" << std::endl;
-	std::cout << "Find by...\n" << std::endl;
-	std::cout << "I - ID" << std::endl;
-	std::cout << "F - First name" << std::endl;
-	std::cout << "L - Last name" << std::endl;
-	//std :: cout << "=====================================" << std :: endl;
+	std::cout << "Find by...\n" << std :: endl;
+	std::cout << "I - ID" << std :: endl;
+	std::cout << "F - First name" << std :: endl;
+	std::cout << "L - Last name" << std :: endl;
 
 	std::cout << "\nChoice selected -- ";
 	std::cin >> c;
@@ -226,13 +278,13 @@ void findStudent(dNode<T>* currNode)
 	switch (c)
 	{
 	case 'I':
-		tell = search(currNode, c);
+		tell = search(head, c);
 		break;
 	case 'F':
-		tell = search(currNode, c);
+		tell = search(head, c);
 		break;
 	case 'L':
-		tell = search(currNode, c);
+		tell = search(head, c);
 		break;
 	}
 
@@ -248,14 +300,14 @@ void findStudent(dNode<T>* currNode)
 		std::cin.ignore();
 		std::cin.get();
 
-		std::cout << "\nWould you like to add him... " << std::endl;
-		std::cout << "Y - Add\nN - Leave" << std::endl;
+		std::cout << "\nWould you like to add the student... " << std::endl;
+		std::cout << "\nY - Yes\nN - No" << std::endl;
 		std::cout << "\nChoice selected -- ";
 		std::cin >> c1;
 
 		if (c1 == 'Y')
 		{
-			addStudent(currNode);
+			addStudent(head);
 		}
 	}
 
@@ -265,14 +317,9 @@ void findStudent(dNode<T>* currNode)
 
 }
 
-//deleteStudent
-//searches and delete student in the list
-//parameter: dnode pointer
-//returnd: none
-//precondtion: none
-//postcondition: one student as been removed  from the list if found
+////////////////////////////////////////////////////////////////////////////////////////////////////////
 template <typename T>
-void deleteStudent(dNode<T>* currNode)
+dNode<T>* deleteStudent(dNode<T>* head)
 {
 	int id;
 	std::string firstname, lastname;
@@ -285,94 +332,192 @@ void deleteStudent(dNode<T>* currNode)
 	std::cout << "I - ID" << std::endl;
 	std::cout << "F - First name" << std::endl;
 	//std :: cout << "L - Last name" << std :: endl;
-	//std :: cout << "=====================================" << std :: endl;
 
 	std::cout << "\nChoice selected -- ";
 	std::cin >> del;
 	std::cout << std::endl;
 
-	dNode<T>* delt;	//node that will be deleted
-	dNode<T>* s = currNode;
-	dNode<T>* prevNode = currNode->prev;
-	dNode<T>* succNode = currNode->next;
+	dNode<T>* delt = NULL;	//node that will be deleted
+	dNode<T>* start = head->next;	//to end loop
+	dNode<T>* curNode, * prevNode, *succNode;	//node
 
 	switch (del)
 	{
-	case 'I':
-		std::cout << "ID -- ";
-		std::cin >> id;
-
-		while (currNode->next != s)
-		{
-			if (currNode->value.getId() == id)
+		case 'I':
+			std::cout << "ID -- ";
+			std::cin >> id;
+		
+			if(head->next->value.getId() == id)//for first student on the list only, head->next
 			{
-				delt = currNode;
+				check = true;
+
+				delt = head->next;
+				prevNode = delt->prev;
+				succNode = delt->next;
+
+				head->next = succNode;
 				prevNode->next = succNode;
 				succNode->prev = prevNode;
 
-				check = true;
-				std::cout << currNode->value.getFname() << " has been removed from the database." << std::endl;
+				std::cout << delt->value.getFname() << " has been removed from the database." << std::endl;
+				delt->next = NULL;
+				delt->prev = NULL;
 				delete delt;
+
+				break;//break needed here or program crashes
 			}
 
-			prevNode = currNode;
-			currNode = currNode->next;
-			succNode = currNode->next;
-		}
-		break;
-	case 'F':
-		std::cout << "First name -- ";
-		std::cin >> firstname;
-
-		while (currNode->next != s)
-		{
-			if (currNode->value.getFname() == firstname)
+			if(head->prev->value.getId() == id)//for last student on the list only, head->prev
 			{
-				delt = currNode;
+				check = true;
+
+				delt = head->prev;
+				prevNode = delt->prev;
+				succNode = delt->next;
+
+				head->prev = prevNode;
 				prevNode->next = succNode;
 				succNode->prev = prevNode;
 
-				check = true;
-				std::cout << currNode->value.getFname() << " has been removed from the database." << std::endl;
+				std::cout << delt->value.getFname() << " has been removed from the database." << std::endl;
+				delt->next = NULL;
+				delt->prev = NULL;
 				delete delt;
 			}
 
-			prevNode = currNode;
-			currNode = currNode->next;
-			succNode = currNode->next;
-		}
-		break;
-	}
+			else if(head->next->value.getId() != id)//for students in the middle
+			{
+				curNode = head->next;
+				prevNode = curNode->prev;
+				succNode = curNode->next;
+				do
+				{
+					if(curNode->value.getId() == id)
+					{
+						check = true;
 
-	if (check == false)
+						delt = curNode;
+						prevNode->next = succNode;
+						succNode->prev = prevNode;
+
+						std::cout << curNode->value.getFname() << " has been removed from the database." << std::endl;
+						delt->next = NULL;
+						delt->prev = NULL;
+						delete delt;
+					}
+
+					curNode = succNode;
+					prevNode = curNode->prev;
+					succNode = curNode->next;
+				}while(curNode != start);
+			}
+
+			break;//end of I case
+
+		case 'F':
+			std::cout << "First name -- ";
+			std::cin >> firstname;
+
+			if(head->next->value.getFname() == firstname)//for first student on the list only, head->next
+			{
+				check = true;
+
+				delt = head->next;
+				prevNode = delt->prev;
+				succNode = delt->next;
+
+				head->next = succNode;
+				prevNode->next = succNode;
+				succNode->prev = prevNode;
+
+				std::cout << delt->value.getFname() << " has been removed from the database." << std::endl;
+				delt->next = NULL;
+				delt->prev = NULL;
+				delete delt;
+
+				break;//break needed here or program crashes
+			}
+
+			if(head->prev->value.getFname() == firstname)//for last student on the list only, head->prev
+			{
+				check = true;
+
+				delt = head->prev;
+				prevNode = delt->prev;
+				succNode = delt->next;
+
+				head->prev = prevNode;
+				prevNode->next = succNode;
+				succNode->prev = prevNode;
+
+				std::cout << delt->value.getFname() << " has been removed from the database." << std::endl;
+				delt->next = NULL;
+				delt->prev = NULL;
+				delete delt;
+			}
+
+			else if(head->next->value.getFname() != firstname)//for students in the middle
+			{
+				curNode = head->next;
+				prevNode = curNode->prev;
+				succNode = curNode->next;
+				do
+				{
+					if(curNode->value.getFname() == firstname)
+					{
+						check = true;
+
+						delt = curNode;
+						prevNode->next = succNode;
+						succNode->prev = prevNode;
+
+						std::cout << curNode->value.getFname() << " has been removed from the database." << std::endl;
+						delt->next = NULL;
+						delt->prev = NULL;
+						delete delt;
+					}
+
+					curNode = succNode;
+					prevNode = curNode->prev;
+					succNode = curNode->next;
+				}while(curNode != start);
+			}
+
+			break;//end of F case
+	}//end of switch
+
+	if(check == false)
 		std::cout << "The student you are trying to delete does not exist." << std::endl;
 
 	std::cout << "\n\nPress enter to continue...";
 	std::cin.ignore();
 	std::cin.get();
+
+	return head;
 }
 
-
+////////////////////////////////////////////////////////////////////////////////////////////////////////
 template <typename T>
-int size(dNode<T>* currNode) {
+int size(dNode<T>* head)
+{
+	if(head->next == head->prev)//for when there is one student in the list
+		return 1;
+
 	int count = 0;
-	dNode<T>* p = currNode->next;
-	/*while (p != currNode)
-	{
-		p = p->next;
-		count++;
-	}
-	*/
+	dNode<T>* p = head->next;
+
 	do
 	{
 		p = p->next;
 		count++;
-	} while (p != currNode->next);
+	} while (p != head->next);
 
 	return count;
 }
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////
 template <typename T>
-void sortStudent(dNode<T>* currNode)
+void sortStudent(dNode<T>* head)
 {
 	dNode<T>* Sorter;
 	dNode<T>* Sorter2;
@@ -383,11 +528,11 @@ void sortStudent(dNode<T>* currNode)
 	std::cout << "\nI - ID\nF - First name\nL - Last name\nY - Year\nG - GPA" << std::endl;
 	std::cout << "\nChoice selected -- ";
 	std::cin >> choice;
-	Sorter = currNode;
+	Sorter = head;
 
 	if (choice == 'I') {
 		Student x;
-		for (int i = 0; i < size(currNode); i++) {
+		for (int i = 0; i < size(head); i++) {
 			Sorter2 = Sorter->next;
 			do
 			{
@@ -398,13 +543,13 @@ void sortStudent(dNode<T>* currNode)
 
 				}
 				Sorter2 = Sorter2->next;
-			} while (Sorter2 != currNode->next);
+			} while (Sorter2 != head->next);
 			Sorter = Sorter->next;
 		}
 	}
 	if (choice == 'F') {
 		Student x;
-		for (int i = 0; i < size(currNode); i++) {
+		for (int i = 0; i < size(head); i++) {
 			Sorter2 = Sorter->next;
 			do
 			{
@@ -415,13 +560,13 @@ void sortStudent(dNode<T>* currNode)
 
 				}
 				Sorter2 = Sorter2->next;
-			} while (Sorter2 != currNode->next);
+			} while (Sorter2 != head->next);
 			Sorter = Sorter->next;
 		}
 	}
 	if (choice == 'L') {
 		Student x;
-		for (int i = 0; i < size(currNode); i++) {
+		for (int i = 0; i < size(head); i++) {
 			Sorter2 = Sorter->next;
 			do
 			{
@@ -432,13 +577,13 @@ void sortStudent(dNode<T>* currNode)
 
 				}
 				Sorter2 = Sorter2->next;
-			} while (Sorter2 != currNode->next);
+			} while (Sorter2 != head->next);
 			Sorter = Sorter->next;
 		}
 	}
 	if (choice == 'Y') {
 		Student x;
-		for (int i = 0; i < size(currNode); i++) {
+		for (int i = 0; i < size(head); i++) {
 			Sorter2 = Sorter->next;
 			
 			do
@@ -450,13 +595,13 @@ void sortStudent(dNode<T>* currNode)
 
 				}
 				Sorter2 = Sorter2->next;
-			} while (Sorter2 != currNode->next);
+			} while (Sorter2 != head->next);
 			Sorter = Sorter->next;
 		}
 	}
 	if (choice == 'G') {
 		Student x;
-		for (int i = 0; i < size(currNode); i++) {
+		for (int i = 0; i < size(head); i++) {
 			Sorter2 = Sorter->next;
 			
 			do
@@ -468,7 +613,7 @@ void sortStudent(dNode<T>* currNode)
 
 				}
 				Sorter2 = Sorter2->next;
-			} while (Sorter2 != currNode->next);
+			} while (Sorter2 != head->next);
 			Sorter = Sorter->next;
 		}
 	}
@@ -478,10 +623,5 @@ void sortStudent(dNode<T>* currNode)
 	std::cin.get();
 
 }
-#endif/*
- *d_dnodeBase.h
- *definition of dnode class
- *Author: Florent Dondjeu Tschoufack
- *Created: November 29, 2019
- *Current: November 29, 2019
- */
+
+#endif
