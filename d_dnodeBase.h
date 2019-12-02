@@ -234,7 +234,7 @@ void addStudent(dNode<T>* head)
 	outfile.open("student.txt", std :: fstream :: app);
 	outfile << id << ' ' << firstname << ' ' << lastname << ' ' << year << ' ' << GPA << std :: endl;
 
-	std::cout<< " Student Added!" << std::endl;
+	std::cout<< "\n Student Added!" << std::endl;
 	std::cout << "\n\nPress enter to continue...";
 	std::cin.ignore();
 	std::cin.get();
