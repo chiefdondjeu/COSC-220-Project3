@@ -12,7 +12,7 @@
 #include<iostream>
 #include<fstream>
 #include<iomanip>
-
+#include<ctype.h>
 #include "d_dnode.h"
 #include "studentClass.h"
 
@@ -173,6 +173,7 @@ void read_file(dNode<T>* head)
 template <typename T>
 void addStudent(dNode<T>* head)
 {
+	bool input = false;
 	std::string space = "\n";
 	int id, year;
 	double GPA;
@@ -183,6 +184,7 @@ void addStudent(dNode<T>* head)
 	std::cout << "\n=======================================================" << std::endl;
 	std::cout << "New student's info...\n" << std::endl;
 	std::cout << "ID\t-- ";
+
 	while(!(std::cin >> id)){
 		std::cout << "ID -- ";
 		std::cin.clear();
@@ -193,7 +195,19 @@ void addStudent(dNode<T>* head)
 		std::cout << "New student's info...\n" << std::endl;
 		std::cout << "ID\t-- ";
 	}
-
+	dNode<T>* test = head;
+	for(int i = 0; i < size(head); i++){
+		if(test->value.getId() == id){
+			for (int i = 0; i < 75; i++)
+				std::cout << space;
+			std::cout<<"Student ID already exists." << std::endl;
+			std::cout << "\n\nPress enter to continue...";
+			std::cin.ignore();
+			std::cin.get();
+			return;
+		}
+		test = test->next;
+	}
 
 	std::cout << "Name\t-- ";
 	std::cin >> firstname >> lastname;
