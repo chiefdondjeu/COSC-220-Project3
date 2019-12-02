@@ -173,6 +173,7 @@ void read_file(dNode<T>* head)
 template <typename T>
 void addStudent(dNode<T>* head)
 {
+	std::string space = "\n";
 	int id, year;
 	double GPA;
 	std::string firstname, lastname;
@@ -182,22 +183,58 @@ void addStudent(dNode<T>* head)
 	std::cout << "\n=======================================================" << std::endl;
 	std::cout << "New student's info...\n" << std::endl;
 	std::cout << "ID\t-- ";
-	std::cin >> id;
+	while(!(std::cin >> id)){
+		std::cout << "ID -- ";
+		std::cin.clear();
+		std::cin.ignore();
+		for (int i = 0; i < 75; i++)
+			std::cout << space;
+		std::cout << "\n=======================================================" << std::endl;
+		std::cout << "New student's info...\n" << std::endl;
+		std::cout << "ID\t-- ";
+	}
+
 
 	std::cout << "Name\t-- ";
 	std::cin >> firstname >> lastname;
 
 	std::cout << "Year\t-- ";
-	std::cin >> year;
+	while(!(std::cin >> year)){
+		std::cout << "Year -- ";
+		std::cin.clear();
+		std::cin.ignore();
+		for (int i = 0; i < 75; i++)
+			std::cout << space;
+		std::cout << "\n=======================================================" << std::endl;
+		std::cout << "New student's info...\n" << std::endl;
+		std::cout << "ID\t-- " << id << std::endl;
+		std::cout << "Name\t-- " << firstname << " " << lastname << std::endl;
+		std::cout << "Year\t-- ";
+	}
+
 
 	std::cout << "GPA\t-- ";
-	std::cin >> GPA;
+	while(!(std::cin >> GPA)){
+		std::cout << "GPA -- ";
+		std::cin.clear();
+		std::cin.ignore();
+		for (int i = 0; i < 75; i++)
+			std::cout << space;
+		std::cout << "\n=======================================================" << std::endl;
+		std::cout << "New student's info...\n" << std::endl;
+		std::cout << "ID\t-- " << id << std::endl;
+		std::cout << "Name\t-- " << firstname << " " << lastname << std::endl;
+		std::cout << "Year\t-- " << year << std::endl;
+		std::cout << "GPA\t-- ";
+	}
+
 
 	add(head, Student(id, firstname, lastname, year, GPA));
 
 	outfile.open("student.txt", std :: fstream :: app);
 	outfile << id << ' ' << firstname << ' ' << lastname << ' ' << year << ' ' << GPA << std :: endl;
 
+	std::cout<< " Student Added!" << std::endl;
 	std::cout << "\n\nPress enter to continue...";
 	std::cin.ignore();
 	std::cin.get();
@@ -207,57 +244,66 @@ void addStudent(dNode<T>* head)
 template<typename T>
 bool search(dNode<T>* head, char choice)
 {
+	std::string space = "\n";
+	bool isTrue = false;
 	int id;
 	std::string firstname, lastname;
 
 	dNode<T>* p = head->next;
 
-	if (choice == 'I')
+	if (choice == 'I' || choice == 'i')
 	{
 		std::cout << "ID -- ";
-		std::cin >> id;
+		while(!(std::cin >> id)){
+			std::cout << "ID -- ";
+			std::cin.clear();
+			std::cin.ignore();
+			for (int i = 0; i < 75; i++)
+				std::cout << space;
+			std::cout << "invalid ID - Try Again."<< std::endl;
+			std::cout << "ID -- ";
+		}
 
-		while (p != head)
-		{
+		do {
 			if (p->value.getId() == id)
 			{
 				std::cout << p->value.getFname();
 				return true;
 			}
 			else p = p->next;
-		}
+		} while(p != head->next);
 	}
 
-	if (choice == 'F')
+	if (choice == 'F' || choice == 'f')
 	{
 		std::cout << "First name -- ";
 		std::cin >> firstname;
 
-		while (p != head)
-		{
+
+		do {
 			if (p->value.getFname() == firstname)
 			{
 				std::cout << p->value.getFname();
 				return true;
 			}
 			else p = p->next;
-		}
+		} while(p != head->next);
+
 	}
 
-	if (choice == 'L')
+	if (choice == 'L' || choice == 'l')
 	{
 		std::cout << "Last name -- ";
 		std::cin >> lastname;
 
-		while (p != head)
-		{
+		do {
 			if (p->value.getLname() == lastname)
 			{
 				std::cout << p->value.getFname();
 				return true;
 			}
 			else p = p->next;
-		}
+		} while(p != head->next);
 	}
 
 	return false;
@@ -267,9 +313,13 @@ bool search(dNode<T>* head, char choice)
 template <typename T>
 void findStudent(dNode<T>* head)
 {
+	std::string space = "\n";
 	char c, c1;
 	bool tell;
+	bool isTrue = false;
 
+
+	while(isTrue != true){
 	std::cout << "\n=======================================================" << std::endl;
 	std::cout << "Find by...\n" << std :: endl;
 	std::cout << "I - ID" << std :: endl;
@@ -279,15 +329,26 @@ void findStudent(dNode<T>* head)
 	std::cout << "\nChoice selected -- ";
 	std::cin >> c;
 	std::cout << std::endl;
+	if(c == 'i' || c == 'I' || c == 'f' || c == 'F' || c == 'l' || c == 'L'){
+		isTrue = true;
+	}
+	if(isTrue == false){
+		for (int i = 0; i < 75; i++)
+			std::cout << space;
+	}
+  }
 
 	switch (c)
 	{
+	case 'i':
 	case 'I':
 		tell = search(head, c);
 		break;
+	case 'f':
 	case 'F':
 		tell = search(head, c);
 		break;
+	case 'l':
 	case 'L':
 		tell = search(head, c);
 		break;
@@ -305,31 +366,46 @@ void findStudent(dNode<T>* head)
 		std::cin.ignore();
 		std::cin.get();
 
-		std::cout << "\nWould you like to add the student... " << std::endl;
-		std::cout << "\nY - Yes\nN - No" << std::endl;
-		std::cout << "\nChoice selected -- ";
-		std::cin >> c1;
+		isTrue = false;
+		while(isTrue != true){
+			std::cout << "\nWould you like to add the student... " << std::endl;
+			std::cout << "\nY - Yes\nN - No" << std::endl;
+			std::cout << "\nChoice selected -- ";
+			std::cin >> c1;
+			if(c1 == 'Y' || c1 == 'y' || c1 == 'N' || c1 == 'n'){
+				isTrue = true;
+			}
+			if(isTrue == false){
+				for (int i = 0; i < 75; i++)
+					std::cout << space;
+			}
+		}
 
-		if (c1 == 'Y')
+
+		if (c1 == 'Y' || c1 == 'y')
 		{
 			addStudent(head);
+
 		}
 	}
 
+if(c1 != 'Y' && c1 != 'y' ){
 	std::cout << "\n\nPress enter to continue...";
 	std::cin.ignore();
 	std::cin.get();
-
+}
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////
 template <typename T>
 dNode<T>* deleteStudent(dNode<T>* head)
 {
+	std::string space = "\n";
+	bool isTrue = false;
 	if(head->next == head->prev)
 	{
 		std :: cout << "ERROR: not allowed to remove last student" << std :: endl;
-		
+
 		std::cout << "\n\nPress enter to continue...";
 		std::cin.ignore();
 		std::cin.get();
@@ -341,7 +417,7 @@ dNode<T>* deleteStudent(dNode<T>* head)
 
 	char del;
 	bool check = false;
-
+	while(isTrue != true){
 	std::cout << "\n=======================================================" << std::endl;
 	std::cout << "Delete by...\n" << std::endl;
 	std::cout << "I - ID" << std::endl;
@@ -351,7 +427,14 @@ dNode<T>* deleteStudent(dNode<T>* head)
 	std::cout << "\nChoice selected -- ";
 	std::cin >> del;
 	std::cout << std::endl;
-
+	if(del == 'I' || del == 'i' || del == 'F' || del == 'f'){
+		isTrue = true;
+	}
+	if(isTrue == false){
+		for (int i = 0; i < 75; i++)
+			std::cout << space;
+	}
+	}
 	dNode<T>* delt = NULL;	//node that will be deleted
 	dNode<T>* start = head->next;	//to end loop
 	dNode<T>* curNode, * prevNode, *succNode;	//node
@@ -361,8 +444,17 @@ dNode<T>* deleteStudent(dNode<T>* head)
 		case 'i':	//for case sensitivity
 		case 'I':
 			std::cout << "ID -- ";
-			std::cin >> id;
-		
+			while(!(std::cin >> id)){
+				std::cout << "ID -- ";
+				std::cin.clear();
+				std::cin.ignore();
+				for (int i = 0; i < 75; i++)
+					std::cout << space;
+				std::cout << "invalid ID - Try Again."<< std::endl;
+				std::cout << "ID -- ";
+			}
+
+
 			if(head->next->value.getId() == id)//for first student on the list only, head->next
 			{
 				check = true;
@@ -536,18 +628,32 @@ int size(dNode<T>* head)
 template <typename T>
 void sortStudent(dNode<T>* head)
 {
+	bool isTrue = false;
+	std::string space = "\n";
 	dNode<T>* Sorter;
 	dNode<T>* Sorter2;
 	char choice;
 
+
+	while(isTrue != true){
 	std::cout << "\n=======================================================" << std::endl;
-	std::cout << "Sort by..." << std::endl;
+	std::cout << "Sort by...\n" << std::endl;
 	std::cout << "\nI - ID\nF - First name\nL - Last name\nY - Year\nG - GPA" << std::endl;
 	std::cout << "\nChoice selected -- ";
+
 	std::cin >> choice;
+	std::cout << std::endl;
+	if(choice == 'I' || choice == 'i' || choice == 'F' || choice == 'f' || choice == 'L' || choice == 'l' || choice == 'Y' || choice == 'y' || choice == 'G' || choice == 'g'){
+		isTrue = true;
+	}
+	if(isTrue == false){
+		for (int i = 0; i < 75; i++)
+			std::cout << space;
+	}
+	}
 	Sorter = head;
 
-	if (choice == 'I') {
+	if (choice == 'I' || choice == 'i') {
 		Student x;
 		for (int i = 0; i < size(head); i++) {
 			Sorter2 = Sorter->next;
@@ -564,7 +670,7 @@ void sortStudent(dNode<T>* head)
 			Sorter = Sorter->next;
 		}
 	}
-	if (choice == 'F') {
+	if (choice == 'F' || choice == 'f') {
 		Student x;
 		for (int i = 0; i < size(head); i++) {
 			Sorter2 = Sorter->next;
@@ -581,7 +687,7 @@ void sortStudent(dNode<T>* head)
 			Sorter = Sorter->next;
 		}
 	}
-	if (choice == 'L') {
+	if (choice == 'L' || choice == 'l') {
 		Student x;
 		for (int i = 0; i < size(head); i++) {
 			Sorter2 = Sorter->next;
@@ -598,11 +704,11 @@ void sortStudent(dNode<T>* head)
 			Sorter = Sorter->next;
 		}
 	}
-	if (choice == 'Y') {
+	if (choice == 'Y' || choice == 'y') {
 		Student x;
 		for (int i = 0; i < size(head); i++) {
 			Sorter2 = Sorter->next;
-			
+
 			do
 			{
 				if (Sorter->value.getYear() > Sorter2->value.getYear()) {
@@ -616,11 +722,11 @@ void sortStudent(dNode<T>* head)
 			Sorter = Sorter->next;
 		}
 	}
-	if (choice == 'G') {
+	if (choice == 'G' || choice == 'g') {
 		Student x;
 		for (int i = 0; i < size(head); i++) {
 			Sorter2 = Sorter->next;
-			
+
 			do
 			{
 				if (Sorter->value.getGPA() > Sorter2->value.getGPA()) {
@@ -634,6 +740,8 @@ void sortStudent(dNode<T>* head)
 			Sorter = Sorter->next;
 		}
 	}
+
+
 
 	std::cout << "\n\nPress enter to continue...";
 	std::cin.ignore();
