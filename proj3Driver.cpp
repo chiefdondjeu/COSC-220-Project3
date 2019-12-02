@@ -17,7 +17,6 @@
 
 int main()
 {
-	
 	dNode<Student>* head = new dNode<Student>, *fix = NULL, *f ;
 	read_file(head);
 
@@ -63,6 +62,7 @@ int main()
 		std::cout << "Q - Quit the program" << std::endl;
 
 		std::cout << "=======================================================" << std::endl;
+		std::cout << "There are currently " << size(head) << " students in the database." << std::endl;
 
 		std::cout << "\nChoice selected -- ";
 		std::cin >> choice;
